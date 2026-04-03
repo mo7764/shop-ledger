@@ -1,5 +1,294 @@
-{
-  "returncode" : 0,
-  "stdout" : "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\">\n<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\n<meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\">\n<meta name=\"apple-mobile-web-app-title\" content=\"Shop Ledger\">\n<meta name=\"theme-color\" content=\"#0d1117\">\n<title>Shop Ledger<\/title>\n<link href=\"https:\/\/fonts.googleapis.com\/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap\" rel=\"stylesheet\">\n<style>\n:root {\n  --bg:        #0d1117;\n  --surface:   #161b22;\n  --surface2:  #1c2333;\n  --border:    #30363d;\n  --border2:   #21262d;\n  --green:     #3fb950;\n  --green-d:   #238636;\n  --green-bg:  rgba(63,185,80,.10);\n  --red:       #f85149;\n  --red-d:     #da3633;\n  --red-bg:    rgba(248,81,73,.10);\n  --blue:      #58a6ff;\n  --blue-bg:   rgba(88,166,255,.10);\n  --purple:    #bc8cff;\n  --purple-bg: rgba(188,140,255,.10);\n  --orange:    #e3b341;\n  --orange-bg: rgba(227,179,65,.10);\n  --text:      #e6edf3;\n  --muted:     #7d8590;\n  --muted2:    #484f58;\n  --radius:    10px;\n  --shadow:    0 8px 32px rgba(0,0,0,.5);\n}\n*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}\nhtml,body{height:100%;overflow:hidden}\nbody{\n  font-family:'Inter',sans-serif;\n  background:var(--bg);\n  color:var(--text);\n  display:flex;flex-direction:column;\n}\n\n\/* ── TOP BAR ── *\/\n.topbar{\n  display:flex;align-items:center;justify-content:space-between;\n  padding:11px 16px;\n  background:var(--surface);\n  border-bottom:1px solid var(--border);\n  flex-shrink:0;gap:10px;\n}\n.topbar-title{font-size:1.05rem;font-weight:800;white-space:nowrap;letter-spacing:-.3px}\n.topbar-title span{color:var(--orange)}\n.month-picker{display:flex;align-items:center;gap:6px}\n.month-picker select{\n  background:var(--surface2);border:1.5px solid var(--border);\n  border-radius:8px;color:var(--text);\n  font-family:'Inter',sans-serif;font-size:.82rem;font-weight:500;\n  padding:6px 10px;outline:none;cursor:pointer;\n}\n.month-picker select:focus{border-color:var(--blue)}\n.btn{\n  display:flex;align-items:center;gap:5px;\n  padding:7px 12px;border-radius:8px;border:none;\n  font-family:'Inter',sans-serif;font-size:.8rem;font-weight:700;\n  cursor:pointer;transition:all .15s;white-space:nowrap;\n}\n.btn-share{background:var(--green-d);color:#fff}\n.btn-share:hover{background:#2ea043}\n.btn-export{background:var(--surface2);color:var(--blue);border:1.5px solid var(--blue)}\n.btn-export:hover{background:var(--blue-bg)}\n\n\/* ── SUMMARY STRIP ── *\/\n.summary-strip{\n  display:flex;gap:8px;padding:9px 14px;\n  background:var(--surface);border-bottom:1px solid var(--border);\n  overflow-x:auto;flex-shrink:0;scrollbar-width:none;\n}\n.summary-strip::-webkit-scrollbar{display:none}\n.sum-pill{\n  display:flex;flex-direction:column;align-items:center;\n  min-width:105px;padding:7px 11px;border-radius:10px;\n  border:1px solid var(--border2);flex-shrink:0;\n}\n.sum-pill .lbl{font-size:.62rem;color:var(--muted);margin-bottom:3px;white-space:nowrap;text-transform:uppercase;letter-spacing:.5px;font-weight:600}\n.sum-pill .val{font-size:.95rem;font-weight:800;white-space:nowrap}\n.sum-pill.g{background:var(--green-bg);border-color:var(--green-d)}.sum-pill.g .val{color:var(--green)}\n.sum-pill.r{background:var(--red-bg);border-color:var(--red-d)}.sum-pill.r .val{color:var(--red)}\n.sum-pill.b{background:var(--blue-bg);border-color:#1f6feb}.sum-pill.b .val{color:var(--blue)}\n.sum-pill.p{background:var(--purple-bg);border-color:#6e40c9}.sum-pill.p .val{color:var(--purple)}\n.sum-pill.o{background:var(--orange-bg);border-color:#9e6a03}.sum-pill.o .val{color:var(--orange)}\n.net-pos{color:var(--green)!important}\n.net-neg{color:var(--red)!important}\n\n\/* ── TABS ── *\/\n.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0}\n.tab-btn{\n  flex:1;padding:10px 4px;background:none;border:none;\n  color:var(--muted);font-family:'Inter',sans-serif;\n  font-size:.78rem;font-weight:600;cursor:pointer;\n  border-bottom:2px solid transparent;transition:all .15s;letter-spacing:.2px;\n}\n.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}\n\n\/* ── TABLE CONTAINER ── *\/\n.table-wrap{flex:1;overflow:auto;scrollbar-color:var(--border) transparent;scrollbar-width:thin}\n\n\/* ── MAIN TABLE ── *\/\ntable{border-collapse:collapse;font-size:.78rem;min-width:960px;width:100%}\nthead th{\n  position:sticky;top:0;z-index:10;\n  background:var(--surface);padding:0;\n  font-weight:700;white-space:nowrap;\n  border:1px solid var(--border);\n}\n.th-group{\n  background:var(--surface2);padding:5px 8px;\n  text-align:center;font-size:.7rem;border-bottom:1px solid var(--border);\n  font-weight:700;letter-spacing:.3px;text-transform:uppercase;\n}\n.th-group.g-in  {color:var(--green)}\n.th-group.g-exp {color:var(--red)}\n.th-group.g-sal {color:var(--blue)}\n.th-group.g-moh {color:var(--purple)}\n.th-group.g-net {color:var(--orange)}\n.th-sub{padding:5px 8px;text-align:center;font-size:.68rem;color:var(--muted);font-weight:600}\n\ntd:first-child,th:first-child{\n  position:sticky;left:0;z-index:5;\n  background:var(--surface2);font-weight:700;color:var(--orange);\n  text-align:center;min-width:38px;max-width:38px;\n  border:1px solid var(--border);\n}\nthead th:first-child{z-index:11;background:var(--surface)}\ntbody tr{border-bottom:1px solid var(--border2)}\ntbody tr:hover td{background:rgba(88,166,255,.04)}\ntbody tr:hover td:first-child{background:var(--surface2)}\ntd{border-right:1px solid var(--border2);border-left:1px solid var(--border2);padding:0;vertical-align:middle}\n\ntd input[type=\"number\"]{\n  width:100%;border:none;background:transparent;\n  color:var(--text);font-family:'Inter',sans-serif;\n  font-size:.78rem;text-align:center;padding:7px 4px;\n  outline:none;min-width:78px;\n}\ntd input[type=\"number\"]:focus{background:rgba(88,166,255,.08);box-shadow:inset 0 0 0 1.5px var(--blue)}\ntd input[type=\"text\"]{\n  width:100%;border:none;background:transparent;\n  color:var(--muted);font-family:'Inter',sans-serif;\n  font-size:.72rem;text-align:left;padding:7px 8px;outline:none;min-width:120px;\n}\ntd input[type=\"text\"]:focus{background:rgba(88,166,255,.06);box-shadow:inset 0 0 0 1.5px var(--border)}\ntd input::-webkit-outer-spin-button,td input::-webkit-inner-spin-button{-webkit-appearance:none}\n\n.calc{color:var(--muted);font-weight:700;text-align:center;padding:7px 6px;white-space:nowrap}\n.calc.g{color:var(--green)}.calc.r{color:var(--red)}.calc.b{color:var(--blue)}\n.calc.p{color:var(--purple)}.calc.o{color:var(--orange)}\n\n.totals-row td{\n  font-weight:800;font-size:.82rem;background:var(--surface2)!important;\n  border-top:2px solid var(--border);padding:8px 6px;text-align:center;\n}\n.totals-row td:first-child{font-size:.72rem;color:var(--muted)}\n\n\/* ── SUMMARY PAGE ── *\/\n.summary-page{display:none;flex:1;overflow-y:auto;padding:16px}\n.summary-page.active{display:block}\n.sum-section{margin-bottom:20px}\n.sum-section h3{\n  font-size:.7rem;font-weight:700;color:var(--muted);\n  letter-spacing:1px;text-transform:uppercase;\n  margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);\n}\n.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}\n.sum-item{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:12px}\n.sum-item .s-lbl{font-size:.68rem;color:var(--muted);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}\n.sum-item .s-val{font-size:1.1rem;font-weight:800}\n.sum-item .s-sub{font-size:.67rem;color:var(--muted2);margin-top:3px}\n.sum-item.full{grid-column:span 2}\n.sum-item.g{border-color:var(--green-d);background:var(--green-bg)}.sum-item.g .s-val{color:var(--green)}\n.sum-item.r{border-color:var(--red-d);background:var(--red-bg)}.sum-item.r .s-val{color:var(--red)}\n.sum-item.b{border-color:#1f6feb;background:var(--blue-bg)}.sum-item.b .s-val{color:var(--blue)}\n.sum-item.p{border-color:#6e40c9;background:var(--purple-bg)}.sum-item.p .s-val{color:var(--purple)}\n.sum-item.o{border-color:#9e6a03;background:var(--orange-bg)}.sum-item.o .s-val{color:var(--orange)}\n\n\/* ── MODAL ── *\/\n.modal-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.75);align-items:center;justify-content:center;padding:16px}\n.modal-overlay.open{display:flex}\n.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow)}\n.modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}\n.modal-header h3{font-size:.95rem;font-weight:800}\n.modal-close{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--muted);width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center}\n.modal-body{padding:16px 20px}\n.share-text{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;font-family:'Inter',sans-serif;font-size:.82rem;line-height:1.8;white-space:pre-wrap;color:var(--text);max-height:300px;overflow-y:auto;margin-bottom:14px}\n.modal-actions{display:flex;gap:8px;flex-wrap:wrap}\n.btn-copy{background:var(--surface2);color:var(--text);border:1.5px solid var(--border);flex:1}\n.btn-copy:hover{border-color:var(--blue)}\n.btn-wa{background:#25D366;color:#fff;flex:1}\n.btn-wa:hover{background:#128C7E}\n\n\/* ── INSTALL BANNER ── *\/\n.install-banner{display:none;background:linear-gradient(135deg,var(--green-d),#1a7f37);padding:9px 16px;flex-shrink:0;align-items:center;justify-content:space-between;gap:10px}\n.install-banner.show{display:flex}\n.install-banner p{font-size:.78rem;font-weight:600;color:#fff}\n.btn-install{background:#fff;color:var(--green-d);padding:6px 14px;border-radius:8px;border:none;font-family:'Inter',sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;white-space:nowrap}\n.dismiss-install{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.1rem;cursor:pointer;padding:0 4px}\n\n@media(max-width:600px){\n  .topbar-title{font-size:.88rem}\n  .btn span{display:none}\n  .sum-grid{grid-template-columns:1fr}\n  .sum-item.full{grid-column:span 1}\n}\n<\/style>\n<\/head>\n<body>\n\n<!-- Install Banner -->\n<div class=\"install-banner\" id=\"installBanner\">\n  <p>📱 Install app on your home screen<\/p>\n  <button class=\"btn-install\" id=\"installBtn\">Install<\/button>\n  <button class=\"dismiss-install\" onclick=\"document.getElementById('installBanner').classList.remove('show')\">✕<\/button>\n<\/div>\n\n<!-- Top Bar -->\n<div class=\"topbar\">\n  <div class=\"topbar-title\">🏪 Shop <span>Ledger<\/span><\/div>\n  <div class=\"month-picker\">\n    <select id=\"selMonth\">\n      <option value=\"1\">January<\/option><option value=\"2\">February<\/option>\n      <option value=\"3\">March<\/option><option value=\"4\">April<\/option>\n      <option value=\"5\">May<\/option><option value=\"6\">June<\/option>\n      <option value=\"7\">July<\/option><option value=\"8\">August<\/option>\n      <option value=\"9\">September<\/option><option value=\"10\">October<\/option>\n      <option value=\"11\">November<\/option><option value=\"12\">December<\/option>\n    <\/select>\n    <select id=\"selYear\"><\/select>\n  <\/div>\n  <div style=\"display:flex;gap:6px\">\n    <button class=\"btn btn-share\" onclick=\"openShare()\">🔗 <span>Share<\/span><\/button>\n    <button class=\"btn btn-export\" onclick=\"exportCSV()\">📥 <span>Export<\/span><\/button>\n  <\/div>\n<\/div>\n\n<!-- Summary Strip -->\n<div class=\"summary-strip\">\n  <div class=\"sum-pill g\"><div class=\"lbl\">Total Income<\/div><div class=\"val\" id=\"s_in\">0.00<\/div><\/div>\n  <div class=\"sum-pill r\"><div class=\"lbl\">Total Expenses<\/div><div class=\"val\" id=\"s_out\">0.00<\/div><\/div>\n  <div class=\"sum-pill b\"><div class=\"lbl\">Salaries<\/div><div class=\"val\" id=\"s_sal\">0.00<\/div><\/div>\n  <div class=\"sum-pill p\"><div class=\"lbl\">Mohamed<\/div><div class=\"val\" id=\"s_moh\">0.00<\/div><\/div>\n  <div class=\"sum-pill g\"><div class=\"lbl\">Cash In<\/div><div class=\"val\" id=\"s_inCash\">0.00<\/div><\/div>\n  <div class=\"sum-pill b\"><div class=\"lbl\">Card In<\/div><div class=\"val\" id=\"s_inCard\">0.00<\/div><\/div>\n  <div class=\"sum-pill r\"><div class=\"lbl\">Cash Out<\/div><div class=\"val\" id=\"s_outCash\">0.00<\/div><\/div>\n  <div class=\"sum-pill r\"><div class=\"lbl\">Bank Out<\/div><div class=\"val\" id=\"s_outBank\">0.00<\/div><\/div>\n  <div class=\"sum-pill o\"><div class=\"lbl\">Net Profit<\/div><div class=\"val\" id=\"s_net\">0.00<\/div><\/div>\n<\/div>\n\n<!-- Tabs -->\n<div class=\"tabs\">\n  <button class=\"tab-btn active\" onclick=\"showTab('table',this)\">📋 Daily Log<\/button>\n  <button class=\"tab-btn\" onclick=\"showTab('summary',this)\">📊 Monthly Summary<\/button>\n<\/div>\n\n<!-- Table Tab -->\n<div class=\"table-wrap\" id=\"tab-table\">\n  <table id=\"mainTable\">\n    <thead>\n      <tr>\n        <th rowspan=\"2\"><div class=\"th-sub\">Day<\/div><\/th>\n        <th colspan=\"3\" class=\"th-group g-in\">📥 Income<\/th>\n        <th colspan=\"3\" class=\"th-group g-exp\">📤 Expenses<\/th>\n        <th colspan=\"3\" class=\"th-group g-sal\">👥 Salaries<\/th>\n        <th colspan=\"3\" class=\"th-group g-moh\">🤲 Mohamed's Draws<\/th>\n        <th colspan=\"1\" class=\"th-group g-net\">💰 Net<\/th>\n        <th colspan=\"1\" class=\"th-group\" style=\"color:var(--muted)\">📝 Notes<\/th>\n      <\/tr>\n      <tr>\n        <th class=\"th-sub\" style=\"color:var(--green)\">Cash<\/th>\n        <th class=\"th-sub\" style=\"color:var(--green)\">Card<\/th>\n        <th class=\"th-sub\" style=\"color:var(--green);font-weight:900\">Total<\/th>\n        <th class=\"th-sub\" style=\"color:var(--red)\">Cash<\/th>\n        <th class=\"th-sub\" style=\"color:var(--red)\">Bank<\/th>\n        <th class=\"th-sub\" style=\"color:var(--red);font-weight:900\">Total<\/th>\n        <th class=\"th-sub\" style=\"color:var(--blue)\">Cash<\/th>\n        <th class=\"th-sub\" style=\"color:var(--blue)\">Bank<\/th>\n        <th class=\"th-sub\" style=\"color:var(--blue);font-weight:900\">Total<\/th>\n        <th class=\"th-sub\" style=\"color:var(--purple)\">Cash<\/th>\n        <th class=\"th-sub\" style=\"color:var(--purple)\">Bank<\/th>\n        <th class=\"th-sub\" style=\"color:var(--purple);font-weight:900\">Total<\/th>\n        <th class=\"th-sub\" style=\"color:var(--orange);font-weight:900\">Daily Net<\/th>\n        <th class=\"th-sub\">Notes<\/th>\n      <\/tr>\n    <\/thead>\n    <tbody id=\"tableBody\"><\/tbody>\n    <tfoot id=\"tableFoot\"><\/tfoot>\n  <\/table>\n<\/div>\n\n<!-- Summary Tab -->\n<div class=\"summary-page\" id=\"tab-summary\">\n  <div id=\"summaryContent\"><\/div>\n<\/div>\n\n<!-- Share Modal -->\n<div class=\"modal-overlay\" id=\"shareModal\">\n  <div class=\"modal\">\n    <div class=\"modal-header\">\n      <h3>🔗 Share Monthly Summary<\/h3>\n      <button class=\"modal-close\" onclick=\"closeShare()\">✕<\/button>\n    <\/div>\n    <div class=\"modal-body\">\n      <div class=\"share-text\" id=\"shareText\"><\/div>\n      <div class=\"modal-actions\">\n        <button class=\"btn btn-copy\" onclick=\"copyShare()\">📋 Copy<\/button>\n        <button class=\"btn btn-wa\" onclick=\"shareWA()\">💬 WhatsApp<\/button>\n      <\/div>\n    <\/div>\n  <\/div>\n<\/div>\n\n<script>\nconst now = new Date();\nlet curMonth = now.getMonth() + 1;\nlet curYear  = now.getFullYear();\nlet data = {};\n\nconst MONTHS = ['January','February','March','April','May','June',\n                'July','August','September','October','November','December'];\n\nfunction init() {\n  const selY = document.getElementById('selYear');\n  for (let y = curYear - 3; y <= curYear + 2; y++) {\n    const o = document.createElement('option');\n    o.value = y; o.textContent = y;\n    if (y === curYear) o.selected = true;\n    selY.appendChild(o);\n  }\n  document.getElementById('selMonth').value = curMonth;\n  loadData();\n  renderTable();\n  document.getElementById('selMonth').onchange = () => { curMonth = +document.getElementById('selMonth').value; renderTable(); };\n  document.getElementById('selYear').onchange  = () => { curYear  = +document.getElementById('selYear').value;  renderTable(); };\n}\n\nfunction loadData() {\n  try { data = JSON.parse(localStorage.getItem('shop_ledger') || '{}'); } catch(e) { data = {}; }\n}\nfunction saveData() { localStorage.setItem('shop_ledger', JSON.stringify(data)); }\n\nfunction getDay(y, m, d) {\n  return data[`${y}-${m}-${d}`] || {inCash:0,inCard:0,expCash:0,expBank:0,salCash:0,salBank:0,mohCash:0,mohBank:0,note:''};\n}\nfunction setField(y, m, d, field, val) {\n  const k = `${y}-${m}-${d}`;\n  if (!data[k]) data[k] = {inCash:0,inCard:0,expCash:0,expBank:0,salCash:0,salBank:0,mohCash:0,mohBank:0,note:''};\n  data[k][field] = val;\n  saveData();\n  updateTotals();\n}\n\nfunction daysInMonth(y, m) { return new Date(y, m, 0).getDate(); }\nfunction fmt(n) { return (+n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }\nfunction fmtS(n){ return (+n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }\n\nfunction renderTable() {\n  const days = daysInMonth(curYear, curMonth);\n  const tbody = document.getElementById('tableBody');\n  tbody.innerHTML = '';\n\n  for (let d = 1; d <= days; d++) {\n    const rec = getDay(curYear, curMonth, d);\n    const tr  = document.createElement('tr');\n\n    const tdDay = document.createElement('td');\n    tdDay.textContent = d;\n    tr.appendChild(tdDay);\n\n    function numInput(field, color) {\n      const td = document.createElement('td');\n      const inp = document.createElement('input');\n      inp.type = 'number'; inp.min = '0'; inp.step = '0.01';\n      inp.value = rec[field] || '';\n      inp.placeholder = '0';\n      inp.style.color = color;\n      inp.addEventListener('input', e => {\n        setField(curYear, curMonth, d, field, parseFloat(e.target.value)||0);\n        updateRowCalc(tr, d);\n      });\n      td.appendChild(inp);\n      return td;\n    }\n\n    tr.appendChild(numInput('inCash',  'var(--green)'));\n    tr.appendChild(numInput('inCard',  'var(--green)'));\n    const tdInTot = document.createElement('td');\n    tdInTot.className = 'calc g'; tdInTot.dataset.role = 'inTot';\n    tdInTot.textContent = fmt(rec.inCash + rec.inCard);\n    tr.appendChild(tdInTot);\n\n    tr.appendChild(numInput('expCash', 'var(--red)'));\n    tr.appendChild(numInput('expBank', 'var(--red)'));\n    const tdExpTot = document.createElement('td');\n    tdExpTot.className = 'calc r'; tdExpTot.dataset.role = 'expTot';\n    tdExpTot.textContent = fmt(rec.expCash + rec.expBank);\n    tr.appendChild(tdExpTot);\n\n    tr.appendChild(numInput('salCash', 'var(--blue)'));\n    tr.appendChild(numInput('salBank', 'var(--blue)'));\n    const tdSalTot = document.createElement('td');\n    tdSalTot.className = 'calc b'; tdSalTot.dataset.role = 'salTot';\n    tdSalTot.textContent = fmt(rec.salCash + rec.salBank);\n    tr.appendChild(tdSalTot);\n\n    tr.appendChild(numInput('mohCash', 'var(--purple)'));\n    tr.appendChild(numInput('mohBank', 'var(--purple)'));\n    const tdMohTot = document.createElement('td');\n    tdMohTot.className = 'calc p'; tdMohTot.dataset.role = 'mohTot';\n    tdMohTot.textContent = fmt(rec.mohCash + rec.mohBank);\n    tr.appendChild(tdMohTot);\n\n    const net = (rec.inCash+rec.inCard)-(rec.expCash+rec.expBank)-(rec.salCash+rec.salBank)-(rec.mohCash+rec.mohBank);\n    const tdNet = document.createElement('td');\n    tdNet.className = 'calc'; tdNet.dataset.role = 'net';\n    tdNet.style.fontWeight = '800';\n    tdNet.style.color = net >= 0 ? 'var(--green)' : 'var(--red)';\n    tdNet.textContent = fmt(net);\n    tr.appendChild(tdNet);\n\n    const tdNote = document.createElement('td');\n    const noteInp = document.createElement('input');\n    noteInp.type = 'text'; noteInp.placeholder = 'Notes...';\n    noteInp.value = rec.note || '';\n    noteInp.addEventListener('change', e => setField(curYear, curMonth, d, 'note', e.target.value));\n    tdNote.appendChild(noteInp);\n    tr.appendChild(tdNote);\n\n    tbody.appendChild(tr);\n  }\n  updateTotals();\n}\n\nfunction updateRowCalc(tr, d) {\n  const rec = getDay(curYear, curMonth, d);\n  const inTot  = rec.inCash  + rec.inCard;\n  const expTot = rec.expCash + rec.expBank;\n  const salTot = rec.salCash + rec.salBank;\n  const mohTot = rec.mohCash + rec.mohBank;\n  const net    = inTot - expTot - salTot - mohTot;\n  tr.querySelector('[data-role=\"inTot\"]').textContent  = fmt(inTot);\n  tr.querySelector('[data-role=\"expTot\"]').textContent = fmt(expTot);\n  tr.querySelector('[data-role=\"salTot\"]').textContent = fmt(salTot);\n  tr.querySelector('[data-role=\"mohTot\"]').textContent = fmt(mohTot);\n  const netEl = tr.querySelector('[data-role=\"net\"]');\n  netEl.textContent = fmt(net);\n  netEl.style.color = net >= 0 ? 'var(--green)' : 'var(--red)';\n}\n\nfunction computeTotals() {\n  const days = daysInMonth(curYear, curMonth);\n  let t = {inCash:0,inCard:0,expCash:0,expBank:0,salCash:0,salBank:0,mohCash:0,mohBank:0};\n  for (let d = 1; d <= days; d++) {\n    const r = getDay(curYear, curMonth, d);\n    for (const k in t) t[k] += +r[k]||0;\n  }\n  t.inTot    = t.inCash  + t.inCard;\n  t.expTot   = t.expCash + t.expBank;\n  t.salTot   = t.salCash + t.salBank;\n  t.mohTot   = t.mohCash + t.mohBank;\n  t.outCash  = t.expCash + t.salCash + t.mohCash;\n  t.outBank  = t.expBank + t.salBank + t.mohBank;\n  t.totalOut = t.expTot  + t.salTot  + t.mohTot;\n  t.net      = t.inTot   - t.totalOut;\n  return t;\n}\n\nfunction updateTotals() {\n  const t = computeTotals();\n  document.getElementById('s_in').textContent     = fmt(t.inTot);\n  document.getElementById('s_out').textContent    = fmt(t.totalOut);\n  document.getElementById('s_sal').textContent    = fmt(t.salTot);\n  document.getElementById('s_moh').textContent    = fmt(t.mohTot);\n  document.getElementById('s_inCash').textContent = fmt(t.inCash);\n  document.getElementById('s_inCard').textContent = fmt(t.inCard);\n  document.getElementById('s_outCash').textContent= fmt(t.outCash);\n  document.getElementById('s_outBank').textContent= fmt(t.outBank);\n  const netEl = document.getElementById('s_net');\n  netEl.textContent = fmt(t.net);\n  netEl.className = 'val ' + (t.net >= 0 ? 'net-pos' : 'net-neg');\n\n  const tfoot = document.getElementById('tableFoot');\n  tfoot.innerHTML = `<tr class=\"totals-row\">\n    <td>TOTAL<\/td>\n    <td style=\"color:var(--green)\">${fmt(t.inCash)}<\/td>\n    <td style=\"color:var(--green)\">${fmt(t.inCard)}<\/td>\n    <td style=\"color:var(--green);font-weight:900\">${fmt(t.inTot)}<\/td>\n    <td style=\"color:var(--red)\">${fmt(t.expCash)}<\/td>\n    <td style=\"color:var(--red)\">${fmt(t.expBank)}<\/td>\n    <td style=\"color:var(--red);font-weight:900\">${fmt(t.expTot)}<\/td>\n    <td style=\"color:var(--blue)\">${fmt(t.salCash)}<\/td>\n    <td style=\"color:var(--blue)\">${fmt(t.salBank)}<\/td>\n    <td style=\"color:var(--blue);font-weight:900\">${fmt(t.salTot)}<\/td>\n    <td style=\"color:var(--purple)\">${fmt(t.mohCash)}<\/td>\n    <td style=\"color:var(--purple)\">${fmt(t.mohBank)}<\/td>\n    <td style=\"color:var(--purple);font-weight:900\">${fmt(t.mohTot)}<\/td>\n    <td style=\"color:${t.net>=0?'var(--green)':'var(--red)'};font-weight:900\">${fmt(t.net)}<\/td>\n    <td><\/td>\n  <\/tr>`;\n\n  updateSummaryPage(t);\n}\n\nfunction updateSummaryPage(t) {\n  const month = MONTHS[curMonth-1];\n  const pct = v => t.inTot > 0 ? ((v\/t.inTot)*100).toFixed(1)+'%' : '0%';\n  document.getElementById('summaryContent').innerHTML = `\n  <div class=\"sum-section\">\n    <h3>📅 ${month} ${curYear}<\/h3>\n    <div class=\"sum-grid\">\n      <div class=\"sum-item g full\">\n        <div class=\"s-lbl\">Total Income<\/div>\n        <div class=\"s-val\">${fmt(t.inTot)}<\/div>\n        <div class=\"s-sub\">Cash: ${fmt(t.inCash)} &nbsp;·&nbsp; Card: ${fmt(t.inCard)}<\/div>\n      <\/div>\n    <\/div>\n  <\/div>\n  <div class=\"sum-section\">\n    <h3>📤 Outgoings<\/h3>\n    <div class=\"sum-grid\">\n      <div class=\"sum-item r\">\n        <div class=\"s-lbl\">Expenses<\/div>\n        <div class=\"s-val\">${fmt(t.expTot)}<\/div>\n        <div class=\"s-sub\">Cash: ${fmt(t.expCash)} · Bank: ${fmt(t.expBank)}<\/div>\n      <\/div>\n      <div class=\"sum-item b\">\n        <div class=\"s-lbl\">Salaries<\/div>\n        <div class=\"s-val\">${fmt(t.salTot)}<\/div>\n        <div class=\"s-sub\">Cash: ${fmt(t.salCash)} · Bank: ${fmt(t.salBank)}<\/div>\n      <\/div>\n      <div class=\"sum-item p full\">\n        <div class=\"s-lbl\">Mohamed's Draws<\/div>\n        <div class=\"s-val\">${fmt(t.mohTot)}<\/div>\n        <div class=\"s-sub\">Cash: ${fmt(t.mohCash)} · Bank: ${fmt(t.mohBank)}<\/div>\n      <\/div>\n      <div class=\"sum-item r full\">\n        <div class=\"s-lbl\">Total Outgoings<\/div>\n        <div class=\"s-val\">${fmt(t.totalOut)}<\/div>\n        <div class=\"s-sub\">${pct(t.totalOut)} of income<\/div>\n      <\/div>\n    <\/div>\n  <\/div>\n  <div class=\"sum-section\">\n    <h3>🏦 Cash vs Bank<\/h3>\n    <div class=\"sum-grid\">\n      <div class=\"sum-item g\">\n        <div class=\"s-lbl\">Total Cash Out<\/div>\n        <div class=\"s-val\">${fmt(t.outCash)}<\/div>\n        <div class=\"s-sub\">${pct(t.outCash)} of income<\/div>\n      <\/div>\n      <div class=\"sum-item b\">\n        <div class=\"s-lbl\">Total Bank Out<\/div>\n        <div class=\"s-val\">${fmt(t.outBank)}<\/div>\n        <div class=\"s-sub\">${pct(t.outBank)} of income<\/div>\n      <\/div>\n    <\/div>\n  <\/div>\n  <div class=\"sum-section\">\n    <h3>💰 Net Result<\/h3>\n    <div class=\"sum-grid\">\n      <div class=\"sum-item o full\">\n        <div class=\"s-lbl\">Monthly Net Profit<\/div>\n        <div class=\"s-val\" style=\"color:${t.net>=0?'var(--green)':'var(--red)'};font-size:1.5rem\">${fmt(t.net)}<\/div>\n        <div class=\"s-sub\">${t.net >= 0 ? '✅ Profit' : '⚠️ Loss'}<\/div>\n      <\/div>\n    <\/div>\n  <\/div>`;\n}\n\nfunction showTab(tab, btn) {\n  document.getElementById('tab-table').style.display   = tab==='table'   ? 'block' : 'none';\n  document.getElementById('tab-summary').style.display = tab==='summary' ? 'block' : 'none';\n  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));\n  btn.classList.add('active');\n}\n\nfunction buildShareText() {\n  const t = computeTotals();\n  const month = MONTHS[curMonth-1];\n  return `📊 Shop Summary — ${month} ${curYear}\n━━━━━━━━━━━━━━━━━━━━\n📥 INCOME\n  💵 Cash:   ${fmtS(t.inCash)}\n  💳 Card:   ${fmtS(t.inCard)}\n  ✅ Total:  ${fmtS(t.inTot)}\n━━━━━━━━━━━━━━━━━━━━\n📤 EXPENSES\n  💵 Cash:   ${fmtS(t.expCash)}\n  🏦 Bank:   ${fmtS(t.expBank)}\n  Total:     ${fmtS(t.expTot)}\n━━━━━━━━━━━━━━━━━━━━\n👥 SALARIES\n  💵 Cash:   ${fmtS(t.salCash)}\n  🏦 Bank:   ${fmtS(t.salBank)}\n  Total:     ${fmtS(t.salTot)}\n━━━━━━━━━━━━━━━━━━━━\n🤲 MOHAMED'S DRAWS\n  💵 Cash:   ${fmtS(t.mohCash)}\n  🏦 Bank:   ${fmtS(t.mohBank)}\n  Total:     ${fmtS(t.mohTot)}\n━━━━━━━━━━━━━━━━━━━━\n💵 Total Cash Out: ${fmtS(t.outCash)}\n🏦 Total Bank Out: ${fmtS(t.outBank)}\n━━━━━━━━━━━━━━━━━━━━\n💰 NET PROFIT: ${fmtS(t.net)} ${t.net>=0?'✅':'⚠️'}`;\n}\n\nfunction openShare() {\n  document.getElementById('shareText').textContent = buildShareText();\n  document.getElementById('shareModal').classList.add('open');\n}\nfunction closeShare() { document.getElementById('shareModal').classList.remove('open'); }\nfunction copyShare() {\n  navigator.clipboard.writeText(document.getElementById('shareText').textContent)\n    .then(() => { const b=document.querySelector('.btn-copy'); b.textContent='✅ Copied!'; setTimeout(()=>b.textContent='📋 Copy',1500); });\n}\nfunction shareWA() {\n  window.open('https:\/\/wa.me\/?text='+encodeURIComponent(buildShareText()), '_blank');\n}\n\nfunction exportCSV() {\n  const days = daysInMonth(curYear, curMonth);\n  const month = MONTHS[curMonth-1];\n  let csv = 'Day,Cash Income,Card Income,Total Income,Cash Expenses,Bank Expenses,Total Expenses,Cash Salaries,Bank Salaries,Total Salaries,Mohamed Cash,Mohamed Bank,Total Mohamed,Daily Net,Notes\\n';\n  for (let d = 1; d <= days; d++) {\n    const r = getDay(curYear, curMonth, d);\n    const inT  = r.inCash+r.inCard, expT = r.expCash+r.expBank;\n    const salT = r.salCash+r.salBank, mohT = r.mohCash+r.mohBank;\n    const net  = inT-expT-salT-mohT;\n    csv += [d,r.inCash,r.inCard,inT,r.expCash,r.expBank,expT,r.salCash,r.salBank,salT,r.mohCash,r.mohBank,mohT,net,`\"${r.note||''}\"`].join(',')+'\\n';\n  }\n  const a = document.createElement('a');\n  a.href = 'data:text\/csv;charset=utf-8,' + encodeURIComponent(csv);\n  a.download = `Shop_Ledger_${month}_${curYear}.csv`;\n  a.click();\n}\n\n\/\/ PWA\nlet deferredPrompt = null;\nwindow.addEventListener('beforeinstallprompt', e => {\n  e.preventDefault(); deferredPrompt = e;\n  document.getElementById('installBanner').classList.add('show');\n});\ndocument.getElementById('installBtn').onclick = async () => {\n  if (!deferredPrompt) return;\n  deferredPrompt.prompt();\n  await deferredPrompt.userChoice;\n  deferredPrompt = null;\n  document.getElementById('installBanner').classList.remove('show');\n};\ndocument.getElementById('shareModal').addEventListener('click', function(e) { if(e.target===this) closeShare(); });\ndocument.getElementById('tab-table').style.display = 'block';\ninit();\n<\/script>\n\n<script>\nconst manifest = {\n  name:'Shop Ledger',short_name:'Shop Ledger',\n  description:'Daily shop income & expense tracker',\n  start_url:'.',display:'standalone',\n  background_color:'#0d1117',theme_color:'#0d1117',\n  icons:[{src:'data:image\/svg+xml,<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" rx=\"20\" fill=\"%230d1117\"\/><text y=\".9em\" font-size=\"80\" x=\"10\">🏪<\/text><\/svg>',sizes:'192x192',type:'image\/svg+xml'}]\n};\nconst blob=new Blob([JSON.stringify(manifest)],{type:'application\/json'});\nconst link=document.createElement('link');link.rel='manifest';link.href=URL.createObjectURL(blob);\ndocument.head.appendChild(link);\n<\/script>\n<\/body>\n<\/html>\n",
-  "stderr" : ""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Shop Ledger">
+<meta name="theme-color" content="#0d1117">
+<title>Shop Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;
+  --border:#30363d;--border2:#21262d;
+  --green:#3fb950;--green-d:#238636;--green-bg:rgba(63,185,80,.10);
+  --red:#f85149;--red-d:#da3633;--red-bg:rgba(248,81,73,.10);
+  --blue:#58a6ff;--blue-bg:rgba(88,166,255,.10);
+  --purple:#bc8cff;--purple-bg:rgba(188,140,255,.10);
+  --orange:#e3b341;--orange-bg:rgba(227,179,65,.10);
+  --text:#e6edf3;--muted:#7d8590;--muted2:#484f58;
+  --shadow:0 8px 32px rgba(0,0,0,.5);
 }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;gap:10px}
+.topbar-title{font-size:1.05rem;font-weight:800;white-space:nowrap}
+.topbar-title span{color:var(--orange)}
+.month-picker{display:flex;align-items:center;gap:6px}
+.month-picker select{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:.82rem;padding:6px 10px;outline:none;cursor:pointer}
+.btn{display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;border:none;font-family:'Inter',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-share{background:var(--green-d);color:#fff}
+.btn-export{background:var(--surface2);color:var(--blue);border:1.5px solid var(--blue)}
+.summary-strip{display:flex;gap:8px;padding:9px 14px;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+.sum-pill{display:flex;flex-direction:column;align-items:center;min-width:105px;padding:7px 11px;border-radius:10px;border:1px solid var(--border2);flex-shrink:0}
+.sum-pill .lbl{font-size:.62rem;color:var(--muted);margin-bottom:3px;white-space:nowrap;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.sum-pill .val{font-size:.95rem;font-weight:800;white-space:nowrap}
+.sum-pill.g{background:var(--green-bg);border-color:var(--green-d)}.sum-pill.g .val{color:var(--green)}
+.sum-pill.r{background:var(--red-bg);border-color:var(--red-d)}.sum-pill.r .val{color:var(--red)}
+.sum-pill.b{background:var(--blue-bg);border-color:#1f6feb}.sum-pill.b .val{color:var(--blue)}
+.sum-pill.p{background:var(--purple-bg);border-color:#6e40c9}.sum-pill.p .val{color:var(--purple)}
+.sum-pill.o{background:var(--orange-bg);border-color:#9e6a03}.sum-pill.o .val{color:var(--orange)}
+.net-pos{color:var(--green)!important}.net-neg{color:var(--red)!important}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0}
+.tab-btn{flex:1;padding:10px 4px;background:none;border:none;color:var(--muted);font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.table-wrap{flex:1;overflow:auto;scrollbar-width:thin}
+table{border-collapse:collapse;font-size:.78rem;min-width:960px;width:100%}
+thead th{position:sticky;top:0;z-index:10;background:var(--surface);padding:0;font-weight:700;white-space:nowrap;border:1px solid var(--border)}
+.th-group{background:var(--surface2);padding:5px 8px;text-align:center;font-size:.7rem;border-bottom:1px solid var(--border);font-weight:700;text-transform:uppercase}
+.th-group.g-in{color:var(--green)}.th-group.g-exp{color:var(--red)}.th-group.g-sal{color:var(--blue)}.th-group.g-moh{color:var(--purple)}.th-group.g-net{color:var(--orange)}
+.th-sub{padding:5px 8px;text-align:center;font-size:.68rem;color:var(--muted);font-weight:600}
+td:first-child,th:first-child{position:sticky;left:0;z-index:5;background:var(--surface2);font-weight:700;color:var(--orange);text-align:center;min-width:38px;max-width:38px;border:1px solid var(--border)}
+thead th:first-child{z-index:11;background:var(--surface)}
+tbody tr{border-bottom:1px solid var(--border2)}
+tbody tr:hover td{background:rgba(88,166,255,.04)}
+td{border-right:1px solid var(--border2);border-left:1px solid var(--border2);padding:0;vertical-align:middle}
+td input[type="number"]{width:100%;border:none;background:transparent;color:var(--text);font-family:'Inter',sans-serif;font-size:.78rem;text-align:center;padding:7px 4px;outline:none;min-width:78px}
+td input[type="number"]:focus{background:rgba(88,166,255,.08);box-shadow:inset 0 0 0 1.5px var(--blue)}
+td input[type="text"]{width:100%;border:none;background:transparent;color:var(--muted);font-family:'Inter',sans-serif;font-size:.72rem;text-align:left;padding:7px 8px;outline:none;min-width:120px}
+td input::-webkit-outer-spin-button,td input::-webkit-inner-spin-button{-webkit-appearance:none}
+.calc{font-weight:700;text-align:center;padding:7px 6px;white-space:nowrap}
+.calc.g{color:var(--green)}.calc.r{color:var(--red)}.calc.b{color:var(--blue)}.calc.p{color:var(--purple)}.calc.o{color:var(--orange)}
+.totals-row td{font-weight:800;font-size:.82rem;background:var(--surface2)!important;border-top:2px solid var(--border);padding:8px 6px;text-align:center}
+.summary-page{display:none;flex:1;overflow-y:auto;padding:16px}
+.sum-section{margin-bottom:20px}
+.sum-section h3{font-size:.7rem;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sum-item{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:12px}
+.sum-item .s-lbl{font-size:.68rem;color:var(--muted);margin-bottom:4px;font-weight:600;text-transform:uppercase}
+.sum-item .s-val{font-size:1.1rem;font-weight:800}
+.sum-item .s-sub{font-size:.67rem;color:var(--muted2);margin-top:3px}
+.sum-item.full{grid-column:span 2}
+.sum-item.g{border-color:var(--green-d);background:var(--green-bg)}.sum-item.g .s-val{color:var(--green)}
+.sum-item.r{border-color:var(--red-d);background:var(--red-bg)}.sum-item.r .s-val{color:var(--red)}
+.sum-item.b{border-color:#1f6feb;background:var(--blue-bg)}.sum-item.b .s-val{color:var(--blue)}
+.sum-item.p{border-color:#6e40c9;background:var(--purple-bg)}.sum-item.p .s-val{color:var(--purple)}
+.sum-item.o{border-color:#9e6a03;background:var(--orange-bg)}.sum-item.o .s-val{color:var(--orange)}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.75);align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.modal-header h3{font-size:.95rem;font-weight:800}
+.modal-close{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--muted);width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+.modal-body{padding:16px 20px}
+.share-text{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:.82rem;line-height:1.8;white-space:pre-wrap;color:var(--text);max-height:300px;overflow-y:auto;margin-bottom:14px}
+.modal-actions{display:flex;gap:8px}
+.btn-copy{background:var(--surface2);color:var(--text);border:1.5px solid var(--border);flex:1}
+.btn-wa{background:#25D366;color:#fff;flex:1}
+@media(max-width:600px){.btn span{display:none}.sum-grid{grid-template-columns:1fr}.sum-item.full{grid-column:span 1}}
+</ 
+  </head>
+<body>
+<div class="topbar">
+  <div class="topbar-title">🏪 Shop <span>Ledger</span></div>
+  <div class="month-picker">
+    <select id="selMonth">
+      <option value="1">January</option><option value="2">February</option>
+      <option value="3">March</option><option value="4">April</option>
+      <option value="5">May</option><option value="6">June</option>
+      <option value="7">July</option><option value="8">August</option>
+      <option value="9">September</option><option value="10">October</option>
+      <option value="11">November</option><option value="12">December</option>
+    </select>
+    <select id="selYear"></select>
+  </div>
+  <div style="display:flex;gap:6px">
+    <button class="btn btn-share" onclick="openShare()">🔗 <span>Share</span></button>
+    <button class="btn btn-export" onclick="exportCSV()">📥 <span>Export</span></button>
+  </div>
+</div>
+<div class="summary-strip">
+  <div class="sum-pill g"><div class="lbl">Total Income</div><div class="val" id="s_in">0.00</div></div>
+  <div class="sum-pill r"><div class="lbl">Total Expenses</div><div class="val" id="s_out">0.00</div></div>
+  <div class="sum-pill b"><div class="lbl">Salaries</div><div class="val" id="s_sal">0.00</div></div>
+  <div class="sum-pill p"><div class="lbl">Mohamed</div><div class="val" id="s_moh">0.00</div></div>
+  <div class="sum-pill g"><div class="lbl">Cash In</div><div class="val" id="s_inCash">0.00</div></div>
+  <div class="sum-pill b"><div class="lbl">Card In</div><div class="val" id="s_inCard">0.00</div></div>
+  <div class="sum-pill r"><div class="lbl">Cash Out</div><div class="val" id="s_outCash">0.00</div></div>
+  <div class="sum-pill r"><div class="lbl">Bank Out</div><div class="val" id="s_outBank">0.00</div></div>
+  <div class="sum-pill o"><div class="lbl">Net Profit</div><div class="val" id="s_net">0.00</div></div>
+</div>
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('table',this)">📋 Daily Log</button>
+  <button class="tab-btn" onclick="showTab('summary',this)">📊 Monthly Summary</button>
+</div>
+<div class="table-wrap" id="tab-table">
+  <table>
+    <thead>
+      <tr>
+        <th rowspan="2"><div class="th-sub">Day</div></th>
+        <th colspan="3" class="th-group g-in">📥 Income</th>
+        <th colspan="3" class="th-group g-exp">📤 Expenses</th>
+        <th colspan="3" class="th-group g-sal">👥 Salaries</th>
+        <th colspan="3" class="th-group g-moh">🤲 Mohamed</th>
+        <th class="th-group g-net">💰 Net</th>
+        <th class="th-group" style="color:var(--muted)">📝</th>
+      </tr>
+      <tr>
+        <th class="th-sub" style="color:var(--green)">Cash</th>
+        <th class="th-sub" style="color:var(--green)">Card</th>
+        <th class="th-sub" style="color:var(--green);font-weight:900">Total</th>
+        <th class="th-sub" style="color:var(--red)">Cash</th>
+        <th class="th-sub" style="color:var(--red)">Bank</th>
+        <th class="th-sub" style="color:var(--red);font-weight:900">Total</th>
+        <th class="th-sub" style="color:var(--blue)">Cash</th>
+        <th class="th-sub" style="color:var(--blue)">Bank</th>
+        <th class="th-sub" style="color:var(--blue);font-weight:900">Total</th>
+        <th class="th-sub" style="color:var(--purple)">Cash</th>
+        <th class="th-sub" style="color:var(--purple)">Bank</th>
+        <th class="th-sub" style="color:var(--purple);font-weight:900">Total</th>
+        <th class="th-sub" style="color:var(--orange);font-weight:900">Daily Net</th>
+        <th class="th-sub">Notes</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+    <tfoot id="tableFoot"></tfoot>
+  </table>
+</div>
+<div class="summary-page" id="tab-summary"><div id="summaryContent"></div></div>
+<div class="modal-overlay" id="shareModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🔗 Share Summary</h3>
+      <button class="modal-close" onclick="closeShare()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="share-text" id="shareText"></div>
+      <div class="modal-actions">
+        <button class="btn btn-copy" onclick="copyShare()">📋 Copy</button>
+        <button class="btn btn-wa" onclick="shareWA()">💬 WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const now=new Date();
+let curMonth=now.getMonth()+1,curYear=now.getFullYear(),data={};
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function init(){
+  const selY=document.getElementById('selYear');
+  for(let y=curYear-3;y<=curYear+2;y++){const o=document.createElement('option');o.value=y;o.textContent=y;if(y===curYear)o.selected=true;selY.appendChild(o)}
+  document.getElementById('selMonth').value=curMonth;
+  loadData();renderTable();
+  document.getElementById('selMonth').onchange=()=>{curMonth=+document.getElementById('selMonth').value;renderTable()};
+  document.getElementById('selYear').onchange=()=>{curYear=+document.getElementById('selYear').value;renderTable()};
+}
+function loadData(){try{data=JSON.parse(localStorage.getItem('shop_ledger')||'{}')}catch(e){data={}}}
+function saveData(){localStorage.setItem('shop_ledger',JSON.stringify(data))}
+function getDay(y,m,d){return data[`${y}-${m}-${d}`]||{inCash:0,inCard:0,expCash:0,expBank:0,salCash:0,salBank:0,mohCash:0,mohBank:0,note:''}}
+function setField(y,m,d,field,val){const k=`${y}-${m}-${d}`;if(!data[k])data[k]={inCash:0,inCard:0,expCash:0,expBank:0,salCash:0,salBank:0,mohCash:0,mohBank:0,note:''};data[k][field]=val;saveData();updateTotals()}
+function daysInMonth(y,m){return new Date(y,m,0).getDate()}
+function fmt(n){return(+n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function renderTable(){
+  const days=daysInMonth(curYear,curMonth),tbody=document.getElementById('tableBody');
+  tbody.innerHTML='';
+  for(let d=1;d<=days;d++){
+    const rec=getDay(curYear,curMonth,d),tr=document.createElement('tr');
+    const tdDay=document.createElement('td');tdDay.textContent=d;tr.appendChild(tdDay);
+    function numInput(field,color){
+      const td=document.createElement('td'),inp=document.createElement('input');
+      inp.type='number';inp.min='0';inp.step='0.01';inp.value=rec[field]||'';inp.placeholder='0';inp.style.color=color;
+      inp.addEventListener('input',e=>{setField(curYear,curMonth,d,field,parseFloat(e.target.value)||0);updateRowCalc(tr,d)});
+      td.appendChild(inp);return td;
+    }
+    tr.appendChild(numInput('inCash','var(--green)'));
+    tr.appendChild(numInput('inCard','var(--green)'));
+    const tdInTot=document.createElement('td');tdInTot.className='calc g';tdInTot.dataset.role='inTot';tdInTot.textContent=fmt(rec.inCash+rec.inCard);tr.appendChild(tdInTot);
+    tr.appendChild(numInput('expCash','var(--red)'));
+    tr.appendChild(numInput('expBank','var(--red)'));
+    const tdExpTot=document.createElement('td');tdExpTot.className='calc r';tdExpTot.dataset.role='expTot';tdExpTot.textContent=fmt(rec.expCash+rec.expBank);tr.appendChild(tdExpTot);
+    tr.appendChild(numInput('salCash','var(--blue)'));
+    tr.appendChild(numInput('salBank','var(--blue)'));
+    const tdSalTot=document.createElement('td');tdSalTot.className='calc b';tdSalTot.dataset.role='salTot';tdSalTot.textContent=fmt(rec.salCash+rec.salBank);tr.appendChild(tdSalTot);
+    tr.appendChild(numInput('mohCash','var(--purple)'));
+    tr.appendChild(numInput('mohBank','var(--purple)'));
+    const tdMohTot=document.createElement('td');tdMohTot.className='calc p';tdMohTot.dataset.role='mohTot';tdMohTot.textContent=fmt(rec.mohCash+rec.mohBank);tr.appendChild(tdMohTot);
+    const net=(rec.inCash+rec.inCard)-(rec.expCash+rec.expBank)-(rec.salCash+rec.salBank)-(rec.mohCash+rec.mohBank);
+    const tdNet=document.createElement('td');tdNet.className='calc';tdNet.dataset.role='net';tdNet.style.fontWeight='800';tdNet.style.color=net>=0?'var(--green)':'var(--red)';tdNet.textContent=fmt(net);tr.appendChild(tdNet);
+    const tdNote=document.createElement('td'),noteInp=document.createElement('input');
+    noteInp.type='text';noteInp.placeholder='Notes...';noteInp.value=rec.note||'';
+    noteInp.addEventListener('change',e=>setField(curYear,curMonth,d,'note',e.target.value));
+    tdNote.appendChild(noteInp);tr.appendChild(tdNote);
+    tbody.appendChild(tr);
+  }
+  updateTotals();
+}
+function updateRowCalc(tr,d){
+  const rec=getDay(curYear,curMonth,d);
+  const inTot=rec.inCash+rec.inCard,expTot=rec.expCash+rec.expBank,salTot=rec.salCash+rec.salBank,mohTot=rec.mohCash+rec.mohBank;
+  const net=inTot-expTot-salTot-mohTot;
+  tr.querySelector('[data-role="inTot"]').textContent=fmt(inTot);
+  tr.querySelector('[data-role="expTot"]').textContent=fmt(expTot);
+  tr.querySelector('[data-role="salTot"]').textContent=fmt(salTot);
+  tr.querySelector('[data-role="mohTot"]').textContent=fmt(mohTot);
+  const netEl=tr.querySelector('[data-role="net"]');netEl.textContent=fmt(net);netEl.style.color=net>=0?'var(--green)':'var(--red)';
+}
+function computeTotals(){
+  const days=daysInMonth(curYear,curMonth);
+  let t={inCash:0,inCard:0,expCash:0,expBank:0,salCash:0,salBank:0,mohCash:0,mohBank:0};
+  for(let d=1;d<=days;d++){const r=getDay(curYear,curMonth,d);for(const k in t)t[k]+=+r[k]||0}
+  t.inTot=t.inCash+t.inCard;t.expTot=t.expCash+t.expBank;t.salTot=t.salCash+t.salBank;t.mohTot=t.mohCash+t.mohBank;
+  t.outCash=t.expCash+t.salCash+t.mohCash;t.outBank=t.expBank+t.salBank+t.mohBank;
+  t.totalOut=t.expTot+t.salTot+t.mohTot;t.net=t.inTot-t.totalOut;return t;
+}
+function updateTotals(){
+  const t=computeTotals();
+  document.getElementById('s_in').textContent=fmt(t.inTot);
+  document.getElementById('s_out').textContent=fmt(t.totalOut);
+  document.getElementById('s_sal').textContent=fmt(t.salTot);
+  document.getElementById('s_moh').textContent=fmt(t.mohTot);
+  document.getElementById('s_inCash').textContent=fmt(t.inCash);
+  document.getElementById('s_inCard').textContent=fmt(t.inCard);
+  document.getElementById('s_outCash').textContent=fmt(t.outCash);
+  document.getElementById('s_outBank').textContent=fmt(t.outBank);
+  const netEl=document.getElementById('s_net');netEl.textContent=fmt(t.net);netEl.className='val '+(t.net>=0?'net-pos':'net-neg');
+  const tfoot=document.getElementById('tableFoot');
+  tfoot.innerHTML=`<tr class="totals-row"><td>TOTAL</td><td style="color:var(--green)">${fmt(t.inCash)}</td><td style="color:var(--green)">${fmt(t.inCard)}</td><td style="color:var(--green);font-weight:900">${fmt(t.inTot)}</td><td style="color:var(--red)">${fmt(t.expCash)}</td><td style="color:var(--red)">${fmt(t.expBank)}</td><td style="color:var(--red);font-weight:900">${fmt(t.expTot)}</td><td style="color:var(--blue)">${fmt(t.salCash)}</td><td style="color:var(--blue)">${fmt(t.salBank)}</td><td style="color:var(--blue);font-weight:900">${fmt(t.salTot)}</td><td style="color:var(--purple)">${fmt(t.mohCash)}</td><td style="color:var(--purple)">${fmt(t.mohBank)}</td><td style="color:var(--purple);font-weight:900">${fmt(t.mohTot)}</td><td style="color:${t.net>=0?'var(--green)':'var(--red)'};font-weight:900">${fmt(t.net)}</td><td></td></tr>`;
+  updateSummaryPage(t);
+}
+function updateSummaryPage(t){
+  const month=MONTHS[curMonth-1],pct=v=>t.inTot>0?((v/t.inTot)*100).toFixed(1)+'%':'0%';
+  document.getElementById('summaryContent').innerHTML=`
+  <div class="sum-section"><h3>📅 ${month} ${curYear}</h3><div class="sum-grid"><div class="sum-item g full"><div class="s-lbl">Total Income</div><div class="s-val">${fmt(t.inTot)}</div><div class="s-sub">Cash: ${fmt(t.inCash)} · Card: ${fmt(t.inCard)}</div></div></div></div>
+  <div class="sum-section"><h3>📤 Outgoings</h3><div class="sum-grid"><div class="sum-item r"><div class="s-lbl">Expenses</div><div class="s-val">${fmt(t.expTot)}</div><div class="s-sub">Cash: ${fmt(t.expCash)} · Bank: ${fmt(t.expBank)}</div></div><div class="sum-item b"><div class="s-lbl">Salaries</div><div class="s-val">${fmt(t.salTot)}</div><div class="s-sub">Cash: ${fmt(t.salCash)} · Bank: ${fmt(t.salBank)}</div></div><div class="sum-item p full"><div class="s-lbl">Mohamed's Draws</div><div class="s-val">${fmt(t.mohTot)}</div><div class="s-sub">Cash: ${fmt(t.mohCash)} · Bank: ${fmt(t.mohBank)}</div></div><div class="sum-item r full"><div class="s-lbl">Total Outgoings</div><div class="s-val">${fmt(t.totalOut)}</div><div class="s-sub">${pct(t.totalOut)} of income</div></div></div></div>
+  <div class="sum-section"><h3>🏦 Cash vs Bank</h3><div class="sum-grid"><div class="sum-item g"><div class="s-lbl">Total Cash Out</div><div class="s-val">${fmt(t.outCash)}</div><div class="s-sub">${pct(t.outCash)} of income</div></div><div class="sum-item b"><div class="s-lbl">Total Bank Out</div><div class="s-val">${fmt(t.outBank)}</div><div class="s-sub">${pct(t.outBank)} of income</div></div></div></div>
+  <div class="sum-section"><h3>💰 Net Result</h3><div class="sum-grid"><div class="sum-item o full"><div class="s-lbl">Monthly Net Profit</div><div class="s-val" style="color:${t.net>=0?'var(--green)':'var(--red)'};font-size:1.5rem">${fmt(t.net)}</div><div class="s-sub">${t.net>=0?'✅ Profit':'⚠️ Loss'}</div></div></div></div>`;
+}
+function showTab(tab,btn){
+  document.getElementById('tab-table').style.display=tab==='table'?'block':'none';
+  document.getElementById('tab-summary').style.display=tab==='summary'?'block':'none';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+}
+function buildShareText(){
+  const t=computeTotals(),month=MONTHS[curMonth-1];
+  return `📊 Shop Summary — ${month} ${curYear}\n━━━━━━━━━━━━━━━━━━━━\n📥 INCOME\n  💵 Cash: ${fmt(t.inCash)}\n  💳 Card: ${fmt(t.inCard)}\n  ✅ Total: ${fmt(t.inTot)}\n━━━━━━━━━━━━━━━━━━━━\n📤 EXPENSES\n  💵 Cash: ${fmt(t.expCash)}\n  🏦 Bank: ${fmt(t.expBank)}\n  Total: ${fmt(t.expTot)}\n━━━━━━━━━━━━━━━━━━━━\n👥 SALARIES\n  💵 Cash: ${fmt(t.salCash)}\n  🏦 Bank: ${fmt(t.salBank)}\n  Total: ${fmt(t.salTot)}\n━━━━━━━━━━━━━━━━━━━━\n🤲 MOHAMED\n  💵 Cash: ${fmt(t.mohCash)}\n  🏦 Bank: ${fmt(t.mohBank)}\n  Total: ${fmt(t.mohTot)}\n━━━━━━━━━━━━━━━━━━━━\n💵 Total Cash Out: ${fmt(t.outCash)}\n🏦 Total Bank Out: ${fmt(t.outBank)}\n━━━━━━━━━━━━━━━━━━━━\n💰 NET PROFIT: ${fmt(t.net)} ${t.net>=0?'✅':'⚠️'}`;
+}
+function openShare(){document.getElementById('shareText').textContent=buildShareText();document.getElementById('shareModal').classList.add('open')}
+function closeShare(){document.getElementById('shareModal').classList.remove('open')}
+function copyShare(){navigator.clipboard.writeText(document.getElementById('shareText').textContent).then(()=>{const b=document.querySelector('.btn-copy');b.textContent='✅ Copied!';setTimeout(()=>b.textContent='📋 Copy',1500)})}
+function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent(buildShareText()),'_blank')}
+function exportCSV(){
+  const days=daysInMonth(curYear,curMonth),month=MONTHS[curMonth-1];
+  let csv='Day,Cash Income,Card Income,Total Income,Cash Expenses,Bank Expenses,Total Expenses,Cash Salaries,Bank Salaries,Total Salaries,Mohamed Cash,Mohamed Bank,Total Mohamed,Daily Net,Notes\n';
+  for(let d=1;d<=days;d++){const r=getDay(curYear,curMonth,d);const inT=r.inCash+r.inCard,expT=r.expCash+r.expBank,salT=r.salCash+r.salBank,mohT=r.mohCash+r.mohBank,net=inT-expT-salT-mohT;csv+=[d,r.inCash,r.inCard,inT,r.expCash,r.expBank,expT,r.salCash,r.salBank,salT,r.mohCash,r.mohBank,mohT,net,`"${r.note||''}"`].join(',')+'\n'}
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download=`Shop_Ledger_${month}_${curYear}.csv`;a.click();
+}
+document.getElementById('tab-table').style.display='block';
+document.getElementById('shareModal').addEventListener('click',function(e){if(e.target===this)closeShare()});
+init();
+</script>
+</body>
+</html>
