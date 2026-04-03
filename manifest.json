@@ -1,0 +1,23 @@
+{
+  "name": "Shop Ledger Pro",
+  "short_name": "Shop Ledger",
+  "description": "Daily shop income and expense tracker with suppliers management",
+  "start_url": "/shop-ledger/app.html",
+  "display": "standalone",
+  "background_color": "#0a0f1e",
+  "theme_color": "#0a0f1e",
+  "orientation": "portrait",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/mo7764/shop-ledger/main/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/mo7764/shop-ledger/main/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
